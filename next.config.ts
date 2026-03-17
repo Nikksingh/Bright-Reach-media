@@ -10,15 +10,9 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
-  // Only use export and basePath when building on GitHub Actions
-  ...(isGithubActions ? {
-    output: 'export',
-    basePath: '/Bright-Reach-media',
-  } : {
-    output: 'standalone',
-  }),
+  output: 'standalone',
   images: {
-    unoptimized: true, // Required for static export and safe for dev
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
