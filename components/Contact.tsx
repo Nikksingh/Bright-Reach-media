@@ -3,7 +3,17 @@
 import { motion } from 'motion/react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 
+import { useRouter } from 'next/navigation';
+
 export default function Contact() {
+  const router = useRouter();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // In a real app, you'd handle form submission here
+    router.push('/thank-you');
+  };
+
   return (
     <section id="contact" className="py-32 relative overflow-hidden">
       {/* Background Glow */}
@@ -67,11 +77,12 @@ export default function Contact() {
             transition={{ duration: 0.8 }}
             className="bg-white/5 border border-white/10 p-8 md:p-12 rounded-3xl"
           >
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-xs font-bold uppercase tracking-widest text-white/40">Full Name</label>
                   <input
+                    required
                     type="text"
                     placeholder="John Doe"
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-electric transition-colors"
@@ -80,6 +91,7 @@ export default function Contact() {
                 <div className="space-y-2">
                   <label className="text-xs font-bold uppercase tracking-widest text-white/40">Email Address</label>
                   <input
+                    required
                     type="email"
                     placeholder="john@company.com"
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-electric transition-colors"
@@ -87,14 +99,25 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-widest text-white/40">Monthly Ad Spend</label>
-                <select className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-electric transition-colors appearance-none">
-                  <option className="bg-black">$5k - $10k</option>
-                  <option className="bg-black">$10k - $50k</option>
-                  <option className="bg-black">$50k - $100k</option>
-                  <option className="bg-black">$100k+</option>
-                </select>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-xs font-bold uppercase tracking-widest text-white/40">Phone Number</label>
+                  <input
+                    required
+                    type="tel"
+                    placeholder="+1 (555) 000-0000"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-electric transition-colors"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs font-bold uppercase tracking-widest text-white/40">Monthly Ad Spend</label>
+                  <select className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-4 focus:outline-none focus:border-electric transition-colors appearance-none">
+                    <option className="bg-black">$5k - $10k</option>
+                    <option className="bg-black">$10k - $50k</option>
+                    <option className="bg-black">$50k - $100k</option>
+                    <option className="bg-black">$100k+</option>
+                  </select>
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -106,7 +129,7 @@ export default function Contact() {
                 />
               </div>
 
-              <button className="w-full py-5 bg-electric text-black font-black text-lg rounded-xl flex items-center justify-center gap-3 hover:scale-[1.02] transition-all">
+              <button type="submit" className="w-full py-5 bg-electric text-black font-black text-lg rounded-xl flex items-center justify-center gap-3 hover:scale-[1.02] transition-all">
                 Send Message <Send size={20} />
               </button>
             </form>

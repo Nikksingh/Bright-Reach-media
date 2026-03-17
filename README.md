@@ -1,20 +1,25 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Bright Reach Media | Performance Marketing Agency
 
-# Run and deploy your AI Studio app
+This is a high-performance portfolio for Bright Reach Media, built with Next.js, Tailwind CSS, and Framer Motion.
 
-This contains everything you need to run your app locally.
+## 🚀 Deployment to GitHub Pages
 
-View your app in AI Studio: https://ai.studio/apps/54257210-ceae-4c1c-b6ef-dc3c930cf990
+This project is configured for automatic deployment to GitHub Pages using GitHub Actions.
 
-## Run Locally
+### Steps to Deploy:
 
-**Prerequisites:**  Node.js
+1.  **Push to GitHub**: Push your code to the `main` branch of your repository.
+2.  **Enable GitHub Actions**: Go to your repository settings on GitHub -> **Actions** -> **General** and ensure "Allow all actions and reusable workflows" is selected.
+3.  **Configure Pages**: Go to **Settings** -> **Pages**. Under **Build and deployment** > **Source**, select **GitHub Actions**.
+4.  **Wait for Build**: The included workflow in `.github/workflows/deploy.yml` will automatically build and deploy your site.
 
+### Configuration Note:
+The `next.config.ts` is currently set with:
+- `output: 'export'`: For static site generation.
+- `basePath: '/Bright-Reach-media'`: Matches your repository name for correct asset loading on GitHub Pages.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## 🛠️ Local Development
+
+1.  **Install dependencies**: `npm install`
+2.  **Run the app**: `npm run dev`
+3.  **Build the app**: `npm run build`

@@ -1,7 +1,8 @@
 'use client';
 
-import { motion } from 'motion/react';
-import { Quote } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const testimonials = [
   {
@@ -22,8 +23,23 @@ const testimonials = [
 ];
 
 export default function Testimonials() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const next = () => {
+    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const prev = () => {
+    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
+  useEffect(() => {
+    const timer = setInterval(next, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <section id="testimonials" className="py-32">
+    <section id="testimonials" className="py-32 bg-[#080808]">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-3">
@@ -31,24 +47,53 @@ export default function Testimonials() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((t, index) => (
-            <motion.div
-              key={t.author}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="p-10 bg-white/5 border border-white/10 rounded-3xl relative"
+        <div className="relative max-w-4xl mx-auto">
+          <div className="overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.5 }}
+                className="p-10 md:p-16 bg-white/5 border border-white/10 rounded-[40px] relative text-center"
+              >
+                <Quote className="text-electric/10 absolute top-12 left-12" size={80} />
+                <p className="text-xl md:text-3xl text-white/90 italic mb-10 relative z-10 leading-relaxed font-display">
+                  &quot;{testimonials[currentIndex].quote}&quot;
+                </p>
+                <div>
+                  <p className="font-display font-bold text-2xl text-white mb-1">{testimonials[currentIndex].author}</p>
+                  <p className="text-electric text-sm uppercase tracking-[0.2em] font-bold">{testimonials[currentIndex].role}</p>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* Controls */}
+          <div className="flex justify-center gap-4 mt-10">
+            <button 
+              onClick={prev}
+              className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors"
             >
-              <Quote className="text-electric/20 absolute top-8 right-8" size={48} />
-              <p className="text-lg text-white/80 italic mb-8 relative z-10">&quot;{t.quote}&quot;</p>
-              <div>
-                <p className="font-display font-bold text-white">{t.author}</p>
-                <p className="text-white/40 text-xs uppercase tracking-widest font-bold">{t.role}</p>
-              </div>
-            </motion.div>
-          ))}
+              <ChevronLeft size={24} />
+            </button>
+            <div className="flex items-center gap-2">
+              {testimonials.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentIndex(i)}
+                  className={`w-2 h-2 rounded-full transition-all ${currentIndex === i ? 'w-8 bg-electric' : 'bg-white/20'}`}
+                />
+              ))}
+            </div>
+            <button 
+              onClick={next}
+              className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 transition-colors"
+            >
+              <ChevronRight size={24} />
+            </button>
+          </div>
         </div>
       </div>
     </section>
